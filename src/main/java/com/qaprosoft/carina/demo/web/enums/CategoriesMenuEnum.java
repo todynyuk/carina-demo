@@ -1,4 +1,4 @@
-package com.qaprosoft.carina.demo.web.utils;
+package com.qaprosoft.carina.demo.web.enums;
 
 import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.qaprosoft.carina.demo.web.gui.common.NotebooksAndComputersPageBase;

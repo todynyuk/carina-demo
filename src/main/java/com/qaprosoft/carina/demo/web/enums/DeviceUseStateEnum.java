@@ -1,4 +1,4 @@
-package com.qaprosoft.carina.demo.web.utils;
+package com.qaprosoft.carina.demo.web.enums;
 
 public enum DeviceUseStateEnum {
     NEW("Новий"),

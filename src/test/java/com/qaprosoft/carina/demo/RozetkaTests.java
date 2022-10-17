@@ -1,30 +1,17 @@
 package com.qaprosoft.carina.demo;
 
-import com.qaprosoft.carina.core.foundation.IAbstractTest;
-import com.qaprosoft.carina.demo.web.gui.common.*;
-import com.qaprosoft.carina.demo.web.gui.desktop.HomePage;
-import com.qaprosoft.carina.demo.web.utils.*;
+
+import com.qaprosoft.carina.demo.web.enums.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.qaprosoft.carina.core.foundation.IAbstractTest;
+import com.qaprosoft.carina.demo.web.gui.common.*;
+import com.qaprosoft.carina.demo.web.gui.desktop.HomePage;
+import com.qaprosoft.carina.core.foundation.utils.R;
+
+
 public class RozetkaTests implements IAbstractTest {
-
-    String laptopBrandName = "Fujitsu";
-
-    String smartphoneBrandName = "Xiaomi";
-
-    String laptopSsdStorageCapacityValue = "256 ГБ";
-
-    String minPriceValue = "10000";
-
-    String material="Скло";
-    String color = "Синій";
-
-    String ram = "256";
-
-    String colorEnglishVersion = "Blue";
-
-    String maxPriceValue = "60000";
 
     @Test
     public void testVerifySearchBrandNameMaxCustomPriceAndAvailable() {
@@ -32,17 +19,15 @@ public class RozetkaTests implements IAbstractTest {
         homePage.open();
         NotebooksAndComputersPageBase notebooksAndComputersPageBase = (NotebooksAndComputersPageBase) homePage.clickOnCategoryLink(CategoriesMenuEnum.LAPTOPS_AND_COMPUTERS);
         NotebooksPageBase notebooksPageBase = (NotebooksPageBase) notebooksAndComputersPageBase.clickOnDeviceCategoryLink(ComputersCategoriesEnum.LAPTOPS);
-        notebooksPageBase.brandCheckBoxClick(laptopBrandName);
-        Assert.assertTrue(notebooksPageBase.verifySearchByChosenBrand(laptopBrandName), "One or more  laptops aren`t have this brand name");
-        notebooksPageBase.setPriceLimit(1, maxPriceValue);
+        notebooksPageBase.brandOrSsdStorageCapacityCheckboxClick(R.TESTDATA.get("laptopBrandName"));
+        Assert.assertTrue(notebooksPageBase.verifySearchByChosenBrand(R.TESTDATA.get("laptopBrandName")), "One or more  laptops aren`t have this brand name");
+        notebooksPageBase.setPriceLimit(1, R.TESTDATA.get("maxPriceValue"));
         notebooksPageBase.okButtonClick();
-        Assert.assertTrue(notebooksPageBase.verifySortByCustomMaximumPrice(maxPriceValue), "List prices contains price more than custom maximum price");
-        notebooksPageBase.videoCardTypeCheckBoxClick(VideoCardTypeEnum.DISCRETE_VIDEO_CARD);
+        Assert.assertTrue(notebooksPageBase.verifySortByCustomMaximumPrice(R.TESTDATA.get("maxPriceValue")), "List prices contains price more than custom maximum price");
         notebooksPageBase.deviceUseStateCheckboxClick(DeviceUseStateEnum.NEW);
         notebooksPageBase.itemAvailableCheckboxClick(ItemStateEnum.AVAILABLE);
-        Assert.assertFalse(notebooksPageBase.verifySearchByIsNotAvailableLaptops(), "Text IsNotAvailable exist on one or more laptops");
+        Assert.assertTrue(notebooksPageBase.verifySearchByIsNotAvailableLaptops(1), "Text IsNotAvailable exist on one or more laptops");
     }
-
 
     @Test
     public void testVerifyItemColorRamAndPrice() {
@@ -50,18 +35,40 @@ public class RozetkaTests implements IAbstractTest {
         homePage.open();
         SmartphonesAndTvElectronicsPageBase smartphones = (SmartphonesAndTvElectronicsPageBase) homePage.clickOnCategoryLink(CategoriesMenuEnum.SMARTPHONES_AND_TV);
         SmartphonesPageBase smartphonesPageBase = (SmartphonesPageBase) smartphones.clickOnDeviceCategoryLink(SmartphonesAndElectronicsCategoriesEnum.SMARTPHONES);
-        smartphonesPageBase.brandCheckBoxClick(smartphoneBrandName);
-        smartphonesPageBase.ramButtonClick(ram);
-        smartphonesPageBase.colorCheckBoxClick(color);
-        smartphonesPageBase.materialCheckBoxClick(material);
+        smartphonesPageBase.universalCheckBoxClick(R.TESTDATA.get("smartphoneBrandName"));
+        smartphonesPageBase.universalRomStorageCapacityButtonClick("256");
+        smartphonesPageBase.checkBoxWithCyrillicClick("Синій");
+        smartphonesPageBase.checkBoxWithCyrillicClick("Скло");
         smartphonesPageBase.itemAvailableCheckboxClick(ItemStateEnum.AVAILABLE);
         int smartphoneByIndexPrice = smartphonesPageBase.getSmartphonePriceText(2);
-        Assert.assertTrue(smartphonesPageBase.checkIsChooseColorPresentInDescription(colorEnglishVersion, 2));
+        Assert.assertTrue(smartphonesPageBase.checkIsChooseColorPresentInDescription(R.TESTDATA.get("colorEnglishVersion"), 2));
         DevicePageBase devicePageBase = smartphonesPageBase.linkMoreAboutDeviceClick(2);
-        Assert.assertTrue(devicePageBase.verifyChosenColor(colorEnglishVersion), "Color tests are not equals");
+        Assert.assertTrue(devicePageBase.verifyChosenColor(R.TESTDATA.get("colorEnglishVersion")), "Color tests are not equals");
         int smartphonePrice = devicePageBase.getSmartphonePriceText();
         Assert.assertEquals(smartphonePrice, smartphoneByIndexPrice, "Prices are not equals");
-        Assert.assertTrue(devicePageBase.verifyChosenRamInShortCharacteristics(ram),"RAM values not contains in selected text");
-        Assert.assertTrue(devicePageBase.verifyChosenRamInAllCharacteristics(ram),"RAM values not contains in selected text");
+        Assert.assertTrue(devicePageBase.verifyChosenRamInShortCharacteristics(R.TESTDATA.get("rom")), "RAM values not contains in selected text");
+        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(R.TESTDATA.get("rom")), "RAM values not contains in selected text");
+    }
+
+    @Test
+    public void testVerifyItemRamMatrixTypeAndProcessor() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        NotebooksAndComputersPageBase notebooksAndComputersPageBase = (NotebooksAndComputersPageBase) homePage.clickOnCategoryLink(CategoriesMenuEnum.LAPTOPS_AND_COMPUTERS);
+        ComputersPageBase computersPageBase = (ComputersPageBase) notebooksAndComputersPageBase.clickOnDeviceCategoryLink(ComputersCategoriesEnum.COMPUTERS);
+        computersPageBase.universalCheckBoxClick(R.TESTDATA.get("computerBrandName"));
+        computersPageBase.universalCheckBoxClick(R.TESTDATA.get("processorName"));
+        computersPageBase.checkBoxWithCyrillicClick("8 ГБ");
+        computersPageBase.checkBoxWithCyrillicClick("Моноблоки");
+        computersPageBase.universalShowCheckBoxButtonClick("Тип матриці");
+        computersPageBase.universalCheckBoxClick(R.TESTDATA.get("matrixType"));
+        computersPageBase.universalCheckBoxClick(ItemStateEnum.AVAILABLE.getDeviceUseState());
+        DevicePageBase devicePageBase = computersPageBase.linkMoreAboutDeviceClick(1);
+        Assert.assertTrue(devicePageBase.verifyIsAvailableTextPresent(), "Available text not present");
+        Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("processorName")), "Processor name text not contains in about device text");
+        Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics("8 ГБ"), "Ram text not contains in about device text");
+        Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("matrixType")), "Matrix type text not contains in about device text");
+        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(R.TESTDATA.get("computerBrandName")), "Brand text not contains in description device text");
+        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics("Моноблок"), "Computer type text not contains in description device text");
     }
 }

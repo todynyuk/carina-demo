@@ -1,8 +1,9 @@
 package com.qaprosoft.carina.demo.web.gui.desktop;
 
+import org.openqa.selenium.WebDriver;
+
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.demo.web.gui.common.ToolsAndAutoProductsPageBase;
-import org.openqa.selenium.WebDriver;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = ToolsAndAutoProductsPageBase.class)
 public class ToolsAndAutoProductsPage extends ToolsAndAutoProductsPageBase {

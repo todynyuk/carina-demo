@@ -1,10 +1,12 @@
-package com.qaprosoft.carina.demo.web.utils;
+package com.qaprosoft.carina.demo.web.enums;
 
 import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.qaprosoft.carina.demo.web.gui.common.ComputersPageBase;
 import com.qaprosoft.carina.demo.web.gui.common.NotebooksPageBase;
 
 public enum ComputersCategoriesEnum {
-    LAPTOPS("Ноутбуки", NotebooksPageBase.class);
+    LAPTOPS("Ноутбуки", NotebooksPageBase.class),
+    COMPUTERS("неттопи, моноблоки", ComputersPageBase.class);
 
     private String namePage;
 

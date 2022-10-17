@@ -1,8 +1,9 @@
 package com.qaprosoft.carina.demo.web.gui.common;
 
-import com.qaprosoft.carina.core.gui.AbstractPage;
-import com.qaprosoft.carina.demo.web.utils.ComputersCategoriesEnum;
 import org.openqa.selenium.WebDriver;
+
+import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.qaprosoft.carina.demo.web.enums.ComputersCategoriesEnum;
 
 public abstract class NotebooksAndComputersPageBase extends AbstractPage {
 

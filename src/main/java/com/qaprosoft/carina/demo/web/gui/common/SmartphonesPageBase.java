@@ -1,8 +1,9 @@
 package com.qaprosoft.carina.demo.web.gui.common;
 
-import com.qaprosoft.carina.core.gui.AbstractPage;
-import com.qaprosoft.carina.demo.web.utils.ItemStateEnum;
 import org.openqa.selenium.WebDriver;
+
+import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.qaprosoft.carina.demo.web.enums.ItemStateEnum;
 
 public abstract class SmartphonesPageBase extends AbstractPage {
 
@@ -10,15 +11,13 @@ public abstract class SmartphonesPageBase extends AbstractPage {
         super(driver);
     }
 
-    public abstract void brandCheckBoxClick(String brandName);
+    public abstract void universalCheckBoxClick(String parameter);
 
-    public abstract void ramButtonClick(String ram);
-
-    public abstract void materialCheckBoxClick(String material);
-
-    public abstract void colorCheckBoxClick(String color);
+    public abstract void universalRomStorageCapacityButtonClick(String parameter);
 
     public abstract void itemAvailableCheckboxClick(ItemStateEnum status);
+
+    public abstract void checkBoxWithCyrillicClick(String parameter);
 
     public abstract Integer getSmartphonePriceText(int index);
 

@@ -1,10 +1,11 @@
 package com.qaprosoft.carina.demo.web.gui.common;
 
-import com.qaprosoft.carina.core.gui.AbstractPage;
-import com.qaprosoft.carina.demo.web.utils.DeviceUseStateEnum;
-import com.qaprosoft.carina.demo.web.utils.ItemStateEnum;
-import com.qaprosoft.carina.demo.web.utils.VideoCardTypeEnum;
 import org.openqa.selenium.WebDriver;
+
+import com.qaprosoft.carina.core.gui.AbstractPage;
+import com.qaprosoft.carina.demo.web.enums.DeviceUseStateEnum;
+import com.qaprosoft.carina.demo.web.enums.ItemStateEnum;
+import com.qaprosoft.carina.demo.web.enums.VideoCardTypeEnum;
 
 public abstract class NotebooksPageBase extends AbstractPage {
 
@@ -12,9 +13,7 @@ public abstract class NotebooksPageBase extends AbstractPage {
         super(driver);
     }
 
-    public abstract void brandCheckBoxClick(String brandName);
-
-    public abstract void setSsdStorageCapacityCheckboxClick(String laptopSsdStorageCapacityValue);
+    public abstract void brandOrSsdStorageCapacityCheckboxClick(String parameter);
 
     public abstract void setPriceLimit(int index, String limitPrice);
 
@@ -28,7 +27,9 @@ public abstract class NotebooksPageBase extends AbstractPage {
 
     public abstract boolean verifySearchByChosenBrand(String brandName);
 
-    public abstract boolean verifySearchByIsNotAvailableLaptops();
+    public abstract boolean verifySearchByIsNotAvailableLaptops(int index);
 
     public abstract boolean verifySortByCustomMaximumPrice(String maxPriceValue);
+
+    public abstract DevicePageBase linkMoreAboutDeviceClick(int index);
 }
