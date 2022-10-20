@@ -1,13 +1,13 @@
 package com.qaprosoft.carina.demo.web.enums;
 
-public enum VideoCardTypeEnum {
+public enum VideoCardType {
 
     INTEGRATED_VIDEO_CARD("Інтегрована"),
     DISCRETE_VIDEO_CARD("Дискретна");
 
     private String videoCardType;
 
-    VideoCardTypeEnum(String videoCardType) {
+    VideoCardType(String videoCardType) {
         this.videoCardType = videoCardType;
     }
 

@@ -10,7 +10,7 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.demo.web.gui.common.DevicePageBase;
 import com.qaprosoft.carina.demo.web.gui.common.SmartphonesPageBase;
-import com.qaprosoft.carina.demo.web.enums.ItemStateEnum;
+import com.qaprosoft.carina.demo.web.enums.ItemState;
 
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = SmartphonesPageBase.class)
@@ -39,22 +39,22 @@ public class SmartphonesPage extends SmartphonesPageBase {
     }
 
     @Override
-    public void universalCheckBoxClick(String parameter) {
+    public void clickUniversalCheckBox(String parameter) {
         universalCheckBox.format(parameter).click();
     }
 
     @Override
-    public void universalRomStorageCapacityButtonClick(String parameter) {
+    public void clickUniversalRomStorageCapacityButton(String parameter) {
         universalRomStorageCapacityButton.format(parameter).click();
     }
 
     @Override
-    public void itemAvailableCheckboxClick(ItemStateEnum status) {
+    public void clickItemAvailableCheckbox(ItemState status) {
         universalCheckBox.format(status.getDeviceUseState()).click();
     }
 
     @Override
-    public void checkBoxWithCyrillicClick(String parameter) {
+    public void clickСheckBoxWithCyrillic(String parameter) {
         universalCheckBoxWithCyrillic.format(parameter).click();
     }
 
@@ -70,7 +70,7 @@ public class SmartphonesPage extends SmartphonesPageBase {
     }
 
     @Override
-    public DevicePageBase linkMoreAboutDeviceClick(int index) {
+    public DevicePageBase clickLinkMoreAboutDevice(int index) {
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);
     }

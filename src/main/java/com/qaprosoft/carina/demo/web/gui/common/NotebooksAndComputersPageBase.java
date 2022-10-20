@@ -3,7 +3,7 @@ package com.qaprosoft.carina.demo.web.gui.common;
 import org.openqa.selenium.WebDriver;
 
 import com.qaprosoft.carina.core.gui.AbstractPage;
-import com.qaprosoft.carina.demo.web.enums.ComputersCategoriesEnum;
+import com.qaprosoft.carina.demo.web.enums.ComputersCategories;
 
 public abstract class NotebooksAndComputersPageBase extends AbstractPage {
 
@@ -11,5 +11,5 @@ public abstract class NotebooksAndComputersPageBase extends AbstractPage {
         super(driver);
     }
 
-    public abstract AbstractPage clickOnDeviceCategoryLink(ComputersCategoriesEnum linkName);
+    public abstract AbstractPage clickOnDeviceCategoryLink(ComputersCategories linkName);
 }

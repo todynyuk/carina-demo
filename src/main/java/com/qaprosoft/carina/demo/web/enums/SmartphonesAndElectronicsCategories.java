@@ -3,7 +3,7 @@ package com.qaprosoft.carina.demo.web.enums;
 import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.qaprosoft.carina.demo.web.gui.common.SmartphonesPageBase;
 
-public enum SmartphonesAndElectronicsCategoriesEnum {
+public enum SmartphonesAndElectronicsCategories {
 
     SMARTPHONES("Мобільні телефони", SmartphonesPageBase.class);
 
@@ -11,7 +11,7 @@ public enum SmartphonesAndElectronicsCategoriesEnum {
 
     private Class<? extends AbstractPage> pageClass;
 
-    SmartphonesAndElectronicsCategoriesEnum(String namePage, Class<? extends AbstractPage> pageClass) {
+    SmartphonesAndElectronicsCategories(String namePage, Class<? extends AbstractPage> pageClass) {
         this.namePage = namePage;
         this.pageClass = pageClass;
     }

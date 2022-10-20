@@ -33,23 +33,23 @@ public class ComputersPage extends ComputersPageBase {
     }
 
     @Override
-    public void universalShowCheckBoxButtonClick(String parameter) {
+    public void clickUniversalShowCheckBoxButton(String parameter) {
         universalShowCheckBoxButton.format(parameter).sendKeys(Keys.PAGE_DOWN);
         universalShowCheckBoxButton.format(parameter).click();
     }
 
     @Override
-    public void checkBoxWithCyrillicClick(String parameter) {
+    public void clickСheckBoxWithCyrillic(String parameter) {
         universalCheckBoxWithCyrillic.format(parameter).click();
     }
 
     @Override
-    public void universalCheckBoxClick(String parameter) {
+    public void clickUniversalCheckBox(String parameter) {
         universalCheckBox.format(parameter).click();
     }
 
     @Override
-    public DevicePageBase linkMoreAboutDeviceClick(int index) {
+    public DevicePageBase clickLinkMoreAboutDevice(int index) {
         linksListMoreAboutDevice.get(index).sendKeys(Keys.PAGE_UP);
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);

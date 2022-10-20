@@ -7,7 +7,7 @@ import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.qaprosoft.carina.demo.web.gui.common.NotebooksAndComputersPageBase;
-import com.qaprosoft.carina.demo.web.enums.ComputersCategoriesEnum;
+import com.qaprosoft.carina.demo.web.enums.ComputersCategories;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = NotebooksAndComputersPageBase.class)
 public class NotebooksAndComputersPage extends NotebooksAndComputersPageBase {
@@ -21,7 +21,7 @@ public class NotebooksAndComputersPage extends NotebooksAndComputersPageBase {
     }
 
     @Override
-    public AbstractPage clickOnDeviceCategoryLink(ComputersCategoriesEnum linkName) {
+    public AbstractPage clickOnDeviceCategoryLink(ComputersCategories linkName) {
         universalMenuCategoriesLink.format(linkName.getNamePage()).click();
         return initPage(getDriver(), linkName.getPageClass());
     }

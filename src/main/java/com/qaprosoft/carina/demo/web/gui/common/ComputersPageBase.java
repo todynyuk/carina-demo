@@ -10,11 +10,11 @@ public abstract class ComputersPageBase extends AbstractPage {
         super(driver);
     }
 
-    public abstract void universalShowCheckBoxButtonClick(String parameter);
+    public abstract void clickUniversalShowCheckBoxButton(String parameter);
 
-    public abstract void checkBoxWithCyrillicClick(String parameter);
+    public abstract void clickСheckBoxWithCyrillic(String parameter);
 
-    public abstract void universalCheckBoxClick(String parameter);
+    public abstract void clickUniversalCheckBox(String parameter);
 
-    public abstract DevicePageBase linkMoreAboutDeviceClick(int index);
+    public abstract DevicePageBase clickLinkMoreAboutDevice(int index);
 }

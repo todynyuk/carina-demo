@@ -1,13 +1,13 @@
 package com.qaprosoft.carina.demo.web.enums;
 
-public enum ItemStateEnum {
+public enum ItemState {
     NOT_AVAILABLE("Немає в наявності"),
     AVAILABLE("Є в наявності"),
     WILL_EXPIRE("Закінчується");
 
     private String itemAvailableState;
 
-    ItemStateEnum(String itemAvailableState) {
+    ItemState(String itemAvailableState) {
         this.itemAvailableState = itemAvailableState;
     }
 

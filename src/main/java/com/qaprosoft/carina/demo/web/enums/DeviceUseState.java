@@ -1,12 +1,12 @@
 package com.qaprosoft.carina.demo.web.enums;
 
-public enum DeviceUseStateEnum {
+public enum DeviceUseState {
     NEW("Новий"),
     USED("Б/в");
 
     private String useState;
 
-    DeviceUseStateEnum(String useState) {
+    DeviceUseState(String useState) {
         this.useState = useState;
     }
 

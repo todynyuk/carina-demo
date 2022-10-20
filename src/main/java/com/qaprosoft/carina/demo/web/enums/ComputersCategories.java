@@ -4,7 +4,7 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 import com.qaprosoft.carina.demo.web.gui.common.ComputersPageBase;
 import com.qaprosoft.carina.demo.web.gui.common.NotebooksPageBase;
 
-public enum ComputersCategoriesEnum {
+public enum ComputersCategories {
     LAPTOPS("Ноутбуки", NotebooksPageBase.class),
     COMPUTERS("неттопи, моноблоки", ComputersPageBase.class);
 
@@ -12,7 +12,7 @@ public enum ComputersCategoriesEnum {
 
     private Class<? extends AbstractPage> pageClass;
 
-    ComputersCategoriesEnum(String namePage, Class<? extends AbstractPage> pageClass) {
+    ComputersCategories(String namePage, Class<? extends AbstractPage> pageClass) {
         this.namePage = namePage;
         this.pageClass = pageClass;
     }

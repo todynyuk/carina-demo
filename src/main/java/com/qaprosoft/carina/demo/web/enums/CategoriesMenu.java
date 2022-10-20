@@ -5,7 +5,7 @@ import com.qaprosoft.carina.demo.web.gui.common.NotebooksAndComputersPageBase;
 import com.qaprosoft.carina.demo.web.gui.common.SmartphonesAndTvElectronicsPageBase;
 import com.qaprosoft.carina.demo.web.gui.common.ToolsAndAutoProductsPageBase;
 
-public enum CategoriesMenuEnum {
+public enum CategoriesMenu {
     LAPTOPS_AND_COMPUTERS("Ноутбуки та комп’ютери", NotebooksAndComputersPageBase.class),
     SMARTPHONES_AND_TV("Смартфони, ТВ і електроніка", SmartphonesAndTvElectronicsPageBase.class),
     TOOLS_AND_AUTO_PRODUCTS("Інструменти та автотовари", ToolsAndAutoProductsPageBase.class);
@@ -14,7 +14,7 @@ public enum CategoriesMenuEnum {
 
     private Class<? extends AbstractPage> pageClass;
 
-    CategoriesMenuEnum(String namePage, Class<? extends AbstractPage> pageClass) {
+    CategoriesMenu(String namePage, Class<? extends AbstractPage> pageClass) {
         this.namePage = namePage;
         this.pageClass = pageClass;
     }

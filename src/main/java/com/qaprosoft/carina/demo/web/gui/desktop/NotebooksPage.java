@@ -3,7 +3,6 @@ package com.qaprosoft.carina.demo.web.gui.desktop;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,9 +13,9 @@ import com.itextpdf.text.log.LoggerFactory;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.demo.web.gui.common.NotebooksPageBase;
-import com.qaprosoft.carina.demo.web.enums.DeviceUseStateEnum;
-import com.qaprosoft.carina.demo.web.enums.ItemStateEnum;
-import com.qaprosoft.carina.demo.web.enums.VideoCardTypeEnum;
+import com.qaprosoft.carina.demo.web.enums.DeviceUseState;
+import com.qaprosoft.carina.demo.web.enums.ItemState;
+import com.qaprosoft.carina.demo.web.enums.VideoCardType;
 import com.qaprosoft.carina.demo.web.gui.common.DevicePageBase;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = NotebooksPageBase.class)
@@ -50,7 +49,7 @@ public class NotebooksPage extends NotebooksPageBase {
     }
 
     @Override
-    public void brandOrSsdStorageCapacityCheckboxClick(String parameter) {
+    public void clickBrandOrSsdStorageCapacityCheckbox(String parameter) {
         universalCheckBox.format(parameter).click();
     }
 
@@ -60,32 +59,28 @@ public class NotebooksPage extends NotebooksPageBase {
     }
 
     @Override
-    public void okButtonClick() {
+    public void clickOkButton() {
         okButton.click();
     }
 
     @Override
-    public void videoCardTypeCheckBoxClick(VideoCardTypeEnum videoCardTypeEnum) {
+    public void clickVideoCardTypeCheckBox(VideoCardType videoCardTypeEnum) {
         universalCheckBox.format(videoCardTypeEnum.getVideoCardType()).click();
     }
 
     @Override
-    public void deviceUseStateCheckboxClick(DeviceUseStateEnum useState) {
+    public void clickDeviceUseStateCheckbox(DeviceUseState useState) {
         universalCheckBox.format(useState.getDeviceUseState()).click();
     }
 
     @Override
-    public void itemAvailableCheckboxClick(ItemStateEnum status) {
+    public void clickItemAvailableCheckbox(ItemState status) {
         universalCheckBox.format(status.getDeviceUseState()).click();
     }
 
     @Override
     public boolean verifySearchByChosenBrand(String brandName) {
-        boolean result = false;
-        for (ExtendedWebElement model : searchBrandList) {
-            result = (StringUtils.containsIgnoreCase(model.getText(), brandName));
-        }
-        return result;
+        return searchBrandList.stream().allMatch((model) -> StringUtils.containsIgnoreCase(model.getText(), brandName));
     }
 
     @Override
@@ -96,18 +91,12 @@ public class NotebooksPage extends NotebooksPageBase {
 
     @Override
     public boolean verifySortByCustomMaximumPrice(String maxPriceValue) {
-        boolean result = false;
-        int customMaxPrice = Integer.valueOf(maxPriceValue);
-        int priceFromList;
-        for (ExtendedWebElement price : priceLaptopText) {
-            priceFromList = Integer.valueOf(price.getText().replace(" ", ""));
-            result = (priceFromList <= customMaxPrice);
-        }
-        return result;
+        return priceLaptopText.stream().mapToInt((price) -> Integer.parseInt(price.getText().
+                replace(" ", ""))).allMatch(price -> price <= Integer.valueOf(maxPriceValue));
     }
 
     @Override
-    public DevicePageBase linkMoreAboutDeviceClick(int index) {
+    public DevicePageBase clickLinkMoreAboutDevice(int index) {
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);
     }
