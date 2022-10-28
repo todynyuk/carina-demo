@@ -1,5 +1,7 @@
 package com.qaprosoft.carina.demo.web.gui.desktop;
 
+import com.itextpdf.text.log.Logger;
+import com.itextpdf.text.log.LoggerFactory;
 import com.qaprosoft.carina.core.foundation.utils.factory.DeviceType;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import com.qaprosoft.carina.demo.web.enums.DropdownFilterOptions;
@@ -8,6 +10,7 @@ import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,8 @@ public class DrlPage extends DrlPageBase {
 
     @FindBy(xpath = "//a[@class='goods-tile__heading ng-star-inserted']")
     private List<ExtendedWebElement> linksListMoreAboutDevice;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public DrlPage(WebDriver driver) {
         super(driver);
@@ -79,14 +84,16 @@ public class DrlPage extends DrlPageBase {
 
     @Override
     public boolean isAllGoodsSortedFromLowToHighPrice() {
-        List<Integer> ratings = new ArrayList<>();
+        List<Integer> priceList = new ArrayList<>();
         for (ExtendedWebElement element : priceItemText) {
-            ratings.add(Integer.parseInt(element.getText()));
+            priceList.add(Integer.parseInt(element.getText()));
         }
-        for (int i = 0; i < ratings.size() - 1; i++) {
-            if (ratings.get(i) <= ratings.get(i + 1)) {
-                return true;
-            } else if (ratings.get(i) > ratings.get(i + 1)) {
+        for (int i = 0; i < priceList.size() - 1; i++) {
+            if (priceList.get(i) <= priceList.get(i + 1)) {
+                //return true;
+                LOGGER.info("Sort from low to high price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");
+            } else if (priceList.get(i) > priceList.get(i + 1)) {
+                LOGGER.error("Sort from low to high price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");
                 return false;
             }
         }
@@ -95,14 +102,16 @@ public class DrlPage extends DrlPageBase {
 
     @Override
     public boolean isAllGoodsSortedFromHighToLowPrice() {
-        List<Integer> ratings = new ArrayList<>();
+        List<Integer> priceList = new ArrayList<>();
         for (ExtendedWebElement element : priceItemText) {
-            ratings.add(Integer.parseInt(element.getText().replace(" ", "")));
+            priceList.add(Integer.parseInt(element.getText().replace(" ", "")));
         }
-        for (int i = 0; i < ratings.size() - 1; i++) {
-            if (ratings.get(i) >= ratings.get(i + 1)) {
-                return true;
-            } else if (ratings.get(i) < ratings.get(i + 1)) {
+        for (int i = 0; i < priceList.size() - 1; i++) {
+            if (priceList.get(i) >= priceList.get(i + 1)) {
+                //return true;
+                LOGGER.info("Sort from high to low price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");
+            } else if (priceList.get(i) < priceList.get(i + 1)) {
+                LOGGER.error("Sort from high to low price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");
                 return false;
             }
         }
