@@ -1,7 +1,8 @@
 package com.qaprosoft.carina.demo;
 
+import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
-import com.qaprosoft.carina.demo.web.gui.desktop.DispensationPointsPage;
+import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,6 +15,8 @@ import com.qaprosoft.carina.core.foundation.utils.R;
 public class RozetkaTests implements IAbstractTest {
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifySearchBrandNameMaxCustomPriceAndAvailable() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -30,6 +33,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyItemColorRamAndPrice() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -51,6 +56,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyItemRamMatrixTypeAndProcessor() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -73,6 +80,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifySortByPrice() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -89,6 +98,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyAddingAndCountGoodsInBasket() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -127,13 +138,15 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyChoseCityInDispensationPointsPage() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         DispensationPointsPageBase dispensationPoints = homePage.clickDispensationPointsLink();
         Assert.assertTrue(dispensationPoints.isDispensationPointsTitleTextPresent(),
                 "Dispensation Points Title Text isn't presented");
-        dispensationPoints.clickChooseCityButton("Полтава");
+        dispensationPoints.clickChooseCityButton("Полтава", "Показати ще");
         Assert.assertTrue(dispensationPoints.isDispensationPointsTitleTextContainsChosenCity("Полтава"),
                 "Dispensation points title not contains chosen city");
         Assert.assertTrue(dispensationPoints.isPickUpPointsTitleTextContainsChosenCity("Полтава"),
@@ -141,6 +154,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testAddGoodsInBasketAndCheckItEmpty() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -154,6 +169,4 @@ public class RozetkaTests implements IAbstractTest {
         int goodsInShoppingBasketCount = shoppingBasket.getGoodsInCartListSize();
         Assert.assertTrue(goodsInShoppingBasketCount > 0, "Basket is empty");
     }
-
-
 }

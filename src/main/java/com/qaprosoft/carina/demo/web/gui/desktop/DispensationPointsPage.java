@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = DispensationPointsPageBase.class)
 public class DispensationPointsPage extends DispensationPointsPageBase {
 
-    @FindBy(xpath = "//button[contains(@class,'tags__toggle') and contains(.,'Показати ще')]")
+    @FindBy(xpath = "//button[contains(@class,'tags__toggle') and contains(.,'%s')]")
     private ExtendedWebElement showMoreButton;
 
     @FindBy(xpath = "//a[@class='tags__link' and contains(.,'%s')]")
@@ -31,8 +31,8 @@ public class DispensationPointsPage extends DispensationPointsPageBase {
     }
 
     @Override
-    public void clickChooseCityButton(String cityName) {
-        showMoreButton.click();
+    public void clickChooseCityButton(String cityName,String param) {
+        showMoreButton.format(param).click();
         chooseCityButton.format(cityName).click();
     }
 

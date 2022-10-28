@@ -8,6 +8,7 @@ import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = DrlPageBase.class)
@@ -43,7 +44,7 @@ public class DrlPage extends DrlPageBase {
 
     @Override
     public String getCategoryText() {
-        return categoryTitleText.getText().replace(" ", "");
+        return categoryTitleText.getText();
     }
 
     @Override
@@ -78,26 +79,34 @@ public class DrlPage extends DrlPageBase {
 
     @Override
     public boolean isAllGoodsSortedFromLowToHighPrice() {
-        boolean state = false;
-        for (int i = 0; i < priceItemText.size() - 1; i++) {
-            state = Integer.parseInt(priceItemText.get(i).getText()) <= Integer.parseInt(priceItemText.get(i + 1).getText());
+        List<Integer> ratings = new ArrayList<>();
+        for (ExtendedWebElement element : priceItemText) {
+            ratings.add(Integer.parseInt(element.getText()));
         }
-        //return priceItemText.stream().allMatch(p->p>=(p+1))
-//        return  IntStream.range(0,priceItemText.size()-1).forEach(i -> {
-//            Integer.parseInt(priceItemText.get(i).getText())>=Integer.parseInt(priceItemText.get(i+1).getText());
-//        });
-
-        return state;
+        for (int i = 0; i < ratings.size() - 1; i++) {
+            if (ratings.get(i) <= ratings.get(i + 1)) {
+                return true;
+            } else if (ratings.get(i) > ratings.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public boolean isAllGoodsSortedFromHighToLowPrice() {
-        boolean state = false;
-        for (int i = 0; i < priceItemText.size() - 1; i++) {
-            state = Integer.parseInt(priceItemText.get(i).getText().replace(" ", ""))
-                    >= Integer.parseInt(priceItemText.get(i + 1).getText().replace(" ", ""));
+        List<Integer> ratings = new ArrayList<>();
+        for (ExtendedWebElement element : priceItemText) {
+            ratings.add(Integer.parseInt(element.getText().replace(" ", "")));
         }
-        return state;
+        for (int i = 0; i < ratings.size() - 1; i++) {
+            if (ratings.get(i) >= ratings.get(i + 1)) {
+                return true;
+            } else if (ratings.get(i) < ratings.get(i + 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
