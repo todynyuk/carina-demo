@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = ToolsAndAutoProductsPageBase.class)
 public class ToolsAndAutoProductsPage extends ToolsAndAutoProductsPageBase {
 
-    @FindBy(xpath = "//a[contains(@class,'tile-cats__heading') and contains(.,'%s')]")
+    @FindBy(xpath = "//span[contains(@class,'popular-category__title') and contains(.,'%s')]")
     private ExtendedWebElement universalMenuCategoriesLink;
 
     public ToolsAndAutoProductsPage(WebDriver driver) {

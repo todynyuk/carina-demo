@@ -1,5 +1,8 @@
 package com.qaprosoft.carina.demo;
 
+import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
+import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
+import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -12,6 +15,8 @@ import com.qaprosoft.carina.core.foundation.utils.R;
 public class RozetkaTests implements IAbstractTest {
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifySearchBrandNameMaxCustomPriceAndAvailable() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -28,6 +33,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyItemColorRamAndPrice() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -49,6 +56,8 @@ public class RozetkaTests implements IAbstractTest {
     }
 
     @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
     public void testVerifyItemRamMatrixTypeAndProcessor() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
@@ -62,11 +71,102 @@ public class RozetkaTests implements IAbstractTest {
         computersPageBase.clickUniversalCheckBox(R.TESTDATA.get("matrixType"));
         computersPageBase.clickUniversalCheckBox(ItemState.AVAILABLE.getDeviceUseState());
         DevicePageBase devicePageBase = computersPageBase.clickLinkMoreAboutDevice(1);
-        Assert.assertTrue(devicePageBase.verifyIsAvailableTextPresent(), "Available text not present");
+        Assert.assertTrue(devicePageBase.verifyIsAvailableTextPresent(), "Available text not presented");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("processorName")), "Processor name text not contains in about device text");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics("8 ГБ"), "Ram text not contains in about device text");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("matrixType")), "Matrix type text not contains in about device text");
         Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(R.TESTDATA.get("computerBrandName")), "Brand text not contains in description device text");
         Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics("Моноблок"), "Computer type text not contains in description device text");
+    }
+
+    @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
+    public void testVerifySortByPrice() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        ToolsAndAutoProductsPageBase toolsAndAutoProducts = (ToolsAndAutoProductsPageBase) homePage.clickOnCategoryLink(CategoriesMenu.TOOLS_AND_AUTO_PRODUCTS);
+        AutoLightsPageBase autoLights = (AutoLightsPageBase) toolsAndAutoProducts.clickOnDeviceCategoryLink(AutoCategories.AUTO_LIGHTS);
+        String chosenCategoryText = autoLights.getCategoryText(AutoLights.DRL);
+        DrlPageBase drl = (DrlPageBase) autoLights.clickOnDeviceCategoryLink(AutoLights.DRL);
+        String categoryTitleText = drl.getCategoryText();
+        Assert.assertEquals(categoryTitleText, chosenCategoryText, "Texts category are not equals");
+        drl.clickDropdownOption(DropdownFilterOptions.FROM_LOW_TO_HIGH);
+        Assert.assertTrue(drl.isAllGoodsSortedFromLowToHighPrice(), "Goods not sorted from low to high price");
+        drl.clickDropdownOption(DropdownFilterOptions.FROM_HIGH_TO_LOW);
+        Assert.assertTrue(drl.isAllGoodsSortedFromHighToLowPrice(), "Goods not sorted from high to low price");
+    }
+
+    @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
+    public void testVerifyAddingAndCountGoodsInBasket() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        ToolsAndAutoProductsPageBase toolsAndAutoProducts = (ToolsAndAutoProductsPageBase) homePage.clickOnCategoryLink(CategoriesMenu.TOOLS_AND_AUTO_PRODUCTS);
+        AutoLightsPageBase autoLights = (AutoLightsPageBase) toolsAndAutoProducts.clickOnDeviceCategoryLink(AutoCategories.AUTO_LIGHTS);
+        DrlPageBase drl = (DrlPageBase) autoLights.clickOnDeviceCategoryLink(AutoLights.DRL);
+        Assert.assertFalse(drl.isAddedToCartGoodsCounterTextPresent(), "Text added to cart goods counter presented");
+        drl.clickBuyButtonByIndex(1);
+        Assert.assertTrue(drl.isAddedToCartGoodsCounterTextPresent(), "Text added to cart goods counter isn't presented");
+        drl.clickBuyButtonByIndex(2);
+        int addedToCartGoodsCounterValue = drl.getAddedToCartGoodsCounterValue();
+        ShoppingBasket shoppingBasket = drl.getBasketMenu();
+        int goodsInShoppingBasketCount = shoppingBasket.getGoodsInCartListSize();
+        Assert.assertEquals(goodsInShoppingBasketCount, addedToCartGoodsCounterValue, "Added to cart goods counter value");
+    }
+
+    @Test
+    public void testVerifyUsualPriceItemAndInBasket() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        ToolsAndAutoProductsPageBase toolsAndAutoProducts = (ToolsAndAutoProductsPageBase) homePage.clickOnCategoryLink(CategoriesMenu.TOOLS_AND_AUTO_PRODUCTS);
+        AutoLightsPageBase autoLights = (AutoLightsPageBase) toolsAndAutoProducts.clickOnDeviceCategoryLink(AutoCategories.AUTO_LIGHTS);
+        DrlPageBase drl = (DrlPageBase) autoLights.clickOnDeviceCategoryLink(AutoLights.DRL);
+        String shortDescription = drl.getListMoreAboutDeviceLinkText(2);
+        int itemPrice = drl.getItemPriceValue(2);
+        drl.clickBuyButtonByIndex(2);
+        drl.clickOnShoppingBasketButton();
+        ShoppingBasket shoppingBasket = drl.getBasketMenu();
+        String itemCardDescriptionText = shoppingBasket.getGoodsDescriptionText(0);
+        Assert.assertEquals(itemCardDescriptionText, shortDescription, "Texts are not equals");
+        int shoppingBasketItemPrice = shoppingBasket.getSumPriceText();
+        Assert.assertEquals(shoppingBasketItemPrice, itemPrice, "Prices are not equals");
+        shoppingBasket.setInputFieldValue(Integer.valueOf(R.TESTDATA.get("shoppingBasketCount")));
+        int changedItemPrice = shoppingBasket.getSumPriceText();
+        Assert.assertEquals(changedItemPrice, (itemPrice * Integer.valueOf(R.TESTDATA.get("shoppingBasketCount"))), "Prices are not equals");
+    }
+
+    @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
+    public void testVerifyChoseCityInDispensationPointsPage() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        DispensationPointsPageBase dispensationPoints = homePage.clickDispensationPointsLink();
+        Assert.assertTrue(dispensationPoints.isDispensationPointsTitleTextPresent(),
+                "Dispensation Points Title Text isn't presented");
+        dispensationPoints.clickChooseCityButton("Полтава", "Показати ще");
+        Assert.assertTrue(dispensationPoints.isDispensationPointsTitleTextContainsChosenCity("Полтава"),
+                "Dispensation points title not contains chosen city");
+        Assert.assertTrue(dispensationPoints.isPickUpPointsTitleTextContainsChosenCity("Полтава"),
+                "PickUp points title not contains chosen city");
+    }
+
+    @Test
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
+    public void testAddGoodsInBasketAndCheckItEmpty() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        ToolsAndAutoProductsPageBase toolsAndAutoProducts = (ToolsAndAutoProductsPageBase) homePage.clickOnCategoryLink(CategoriesMenu.TOOLS_AND_AUTO_PRODUCTS);
+        AutoLightsPageBase autoLights = (AutoLightsPageBase) toolsAndAutoProducts.clickOnDeviceCategoryLink(AutoCategories.AUTO_LIGHTS);
+        DrlPageBase drl = (DrlPageBase) autoLights.clickOnDeviceCategoryLink(AutoLights.DRL);
+        drl.clickBuyButtonByIndex(3);
+        drl.clickOnShoppingBasketButton();
+        ShoppingBasket shoppingBasket = drl.getBasketMenu();
+        Assert.assertFalse(shoppingBasket.isBasketEmptyStatusTextPresent(), "Basket empty status text is presented");
+        int goodsInShoppingBasketCount = shoppingBasket.getGoodsInCartListSize();
+        Assert.assertTrue(goodsInShoppingBasketCount > 0, "Basket is empty");
     }
 }

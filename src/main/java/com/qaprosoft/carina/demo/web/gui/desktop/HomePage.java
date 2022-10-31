@@ -18,6 +18,9 @@ public class HomePage extends HomePageBase {
     @FindBy(xpath = "//a[@class='menu-categories__link' and contains(.,'%s')]")
     private ExtendedWebElement universalMenuCategoriesLink;
 
+    @FindBy(xpath = "//a[contains(@class,'main-links__help') and contains(.,'Точки видачі Rozetka')]")
+    private ExtendedWebElement dispensationPointsLink;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -25,5 +28,10 @@ public class HomePage extends HomePageBase {
     public AbstractPage clickOnCategoryLink(CategoriesMenu linkName) {
         universalMenuCategoriesLink.format(linkName.getNamePage()).click();
         return initPage(getDriver(), linkName.getPageClass());
+    }
+
+    public DispensationPointsPage clickDispensationPointsLink() {
+        dispensationPointsLink.click();
+        return new DispensationPointsPage(driver);
     }
 }
