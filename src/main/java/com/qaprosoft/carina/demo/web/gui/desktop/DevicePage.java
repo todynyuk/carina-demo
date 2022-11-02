@@ -50,7 +50,8 @@ public class DevicePage extends DevicePageBase {
 
     @Override
     public Integer getSmartphonePriceText() {
-        return Integer.valueOf(chosenProductPriceText.getText().replace(" ", "").replaceAll("[^0-9?!\\\\.]", ""));
+        return Integer.valueOf(chosenProductPriceText.getText().replace(" ", "")
+                .replaceAll("[^0-9?!\\\\.]", ""));
     }
 
     @Override
