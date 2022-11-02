@@ -84,4 +84,14 @@
         </classes>
     </test>
 
+    <test name="Adding to basket verifying ">
+        <classes>
+            <class name="com.qaprosoft.carina.demo.RozetkaTests">
+                <methods>
+                    <include name="testVerifyAddingAnItemToTheBasket"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
 </suite>
