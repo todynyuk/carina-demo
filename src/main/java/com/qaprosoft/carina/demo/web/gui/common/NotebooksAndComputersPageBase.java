@@ -11,5 +11,7 @@ public abstract class NotebooksAndComputersPageBase extends AbstractPage {
         super(driver);
     }
 
+    public abstract String getCategoryTitleText();
+
     public abstract AbstractPage clickOnDeviceCategoryLink(ComputersCategories linkName);
 }

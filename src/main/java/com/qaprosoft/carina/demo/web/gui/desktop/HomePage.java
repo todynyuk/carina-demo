@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.web.gui.desktop;
 
+import com.qaprosoft.carina.demo.web.gui.components.HeaderMenu;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -21,6 +22,9 @@ public class HomePage extends HomePageBase {
     @FindBy(xpath = "//a[contains(@class,'main-links__help') and contains(.,'Точки видачі Rozetka')]")
     private ExtendedWebElement dispensationPointsLink;
 
+    @FindBy(xpath = "//div[@class='header-layout']")
+    private HeaderMenu headerMenu;
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -33,5 +37,9 @@ public class HomePage extends HomePageBase {
     public DispensationPointsPage clickDispensationPointsLink() {
         dispensationPointsLink.click();
         return new DispensationPointsPage(driver);
+    }
+
+    public HeaderMenu getHeader() {
+        return headerMenu;
     }
 }

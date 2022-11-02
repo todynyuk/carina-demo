@@ -1,8 +1,11 @@
 package com.qaprosoft.carina.demo;
 
+import com.qaprosoft.carina.core.foundation.dataprovider.annotations.XlsDataSourceParameters;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
+import com.qaprosoft.carina.demo.web.gui.components.HeaderMenu;
 import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -11,6 +14,8 @@ import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.demo.web.gui.common.*;
 import com.qaprosoft.carina.demo.web.gui.desktop.HomePage;
 import com.qaprosoft.carina.core.foundation.utils.R;
+
+import java.util.HashMap;
 
 public class RozetkaTests implements IAbstractTest {
 
@@ -109,11 +114,6 @@ public class RozetkaTests implements IAbstractTest {
         Assert.assertFalse(drl.isAddedToCartGoodsCounterTextPresent(), "Text added to cart goods counter presented");
         drl.clickBuyButtonByIndex(1);
         Assert.assertTrue(drl.isAddedToCartGoodsCounterTextPresent(), "Text added to cart goods counter isn't presented");
-        drl.clickBuyButtonByIndex(2);
-        int addedToCartGoodsCounterValue = drl.getAddedToCartGoodsCounterValue();
-        ShoppingBasket shoppingBasket = drl.getBasketMenu();
-        int goodsInShoppingBasketCount = shoppingBasket.getGoodsInCartListSize();
-        Assert.assertEquals(goodsInShoppingBasketCount, addedToCartGoodsCounterValue, "Added to cart goods counter value");
     }
 
     @Test
@@ -168,5 +168,32 @@ public class RozetkaTests implements IAbstractTest {
         Assert.assertFalse(shoppingBasket.isBasketEmptyStatusTextPresent(), "Basket empty status text is presented");
         int goodsInShoppingBasketCount = shoppingBasket.getGoodsInCartListSize();
         Assert.assertTrue(goodsInShoppingBasketCount > 0, "Basket is empty");
+    }
+
+    @Test()
+    @MethodOwner(owner = "todynyuk")
+    @TestLabel(name = "feature", value = {"web"})
+    public void testVerifyAddingAnItemToTheBasket() {
+        HomePage homePage = new HomePage(getDriver());
+        homePage.open();
+        Assert.assertTrue(homePage.isPageOpened(), "Home page isn't opened");
+        HeaderMenu headerMenu = homePage.getHeader();
+        Assert.assertTrue(headerMenu.isCatalogButtonClickable(), "Catalog button isn't clickable");
+        headerMenu.clickCatalogButton();
+        Assert.assertTrue(headerMenu.isSelectedSectionVisible(MenuCategory.LAPTOPS_COMPUTERS),
+                "Selected category not visible");
+        NotebooksAndComputersPageBase notebooksAndComputers = (NotebooksAndComputersPageBase)
+                headerMenu.clickOnCategoryMenu(MenuCategory.LAPTOPS_COMPUTERS);
+        Assert.assertTrue(notebooksAndComputers.isPageOpened(), "Chosen page not opened");
+        NotebooksPageBase notebooks = (NotebooksPageBase)
+                notebooksAndComputers.clickOnDeviceCategoryLink(ComputersCategories.LAPTOPS);
+        notebooks.clickBrandOrSsdStorageCapacityCheckbox(R.TESTDATA.get("computerBrandName"));
+        String mainSelectedProductText = notebooks.getChosenProductText(1);
+        DevicePageBase devicePageBase = notebooks.clickLinkMoreAboutDevice(1);
+        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(mainSelectedProductText), "Product page isn't opened");
+        ShoppingBasket shoppingBasket = devicePageBase.clickOnBuyButton();
+        String selectedProductInBasketText = shoppingBasket.getGoodsDescriptionText(0);
+        Assert.assertEquals(selectedProductInBasketText, mainSelectedProductText,
+                "Pop up window not contains selected product");
     }
 }

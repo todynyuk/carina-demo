@@ -90,7 +90,6 @@ public class DrlPage extends DrlPageBase {
         }
         for (int i = 0; i < priceList.size() - 1; i++) {
             if (priceList.get(i) <= priceList.get(i + 1)) {
-                //return true;
                 LOGGER.info("Sort from low to high price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");
             } else if (priceList.get(i) > priceList.get(i + 1)) {
                 LOGGER.error("Sort from low to high price: [" + priceList.get(i) + "] [" + priceList.get(i + 1) + "]");

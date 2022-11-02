@@ -17,4 +17,6 @@ public abstract class ComputersPageBase extends AbstractPage {
     public abstract void clickUniversalCheckBox(String parameter);
 
     public abstract DevicePageBase clickLinkMoreAboutDevice(int index);
+
+    public abstract boolean verifyReadyToSendDevicesStatus(String param);
 }

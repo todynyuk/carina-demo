@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.web.gui.desktop;
 
+import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,18 @@ import com.qaprosoft.carina.demo.web.gui.common.DevicePageBase;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = DevicePageBase.class)
 public class DevicePage extends DevicePageBase {
+
+    @FindBy(xpath = "//span[text()=' Купити ']")
+    private ExtendedWebElement buyButton;
+
+    @FindBy(xpath = "//span[text()=' В кошику ']")
+    private ExtendedWebElement basketItemButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'modal__holder')]")
+    private ExtendedWebElement basketPopUpWindow;
+
+    @FindBy(xpath = "//div[contains(@class, 'modal__holder--large')]")
+    private ShoppingBasket shoppingBasket;
 
     @FindBy(xpath = "//p[@class='product-prices__big']")
     private ExtendedWebElement chosenProductPriceText;
@@ -58,5 +71,14 @@ public class DevicePage extends DevicePageBase {
     @Override
     public boolean verifyIsAvailableTextPresent() {
         return isAvailableText.isElementPresent();
+    }
+
+    @Override
+    public ShoppingBasket clickOnBuyButton() {
+        buyButton.click();
+        if (!basketPopUpWindow.isElementPresent()) {
+            basketItemButton.click();
+        }
+        return shoppingBasket;
     }
 }

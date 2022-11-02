@@ -2,6 +2,7 @@ package com.qaprosoft.carina.demo.web.gui.desktop;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -26,6 +27,9 @@ public class ComputersPage extends ComputersPageBase {
 
     @FindBy(xpath = "//a[@class='goods-tile__heading ng-star-inserted']")
     private List<ExtendedWebElement> linksListMoreAboutDevice;
+
+    @FindBy(xpath = "//div[contains(@class,'goods-tile__availability')]")
+    private List<ExtendedWebElement> readyToSendDeviceStratusList;
 
     public ComputersPage(WebDriver driver) {
         super(driver);
@@ -53,5 +57,10 @@ public class ComputersPage extends ComputersPageBase {
         linksListMoreAboutDevice.get(index).sendKeys(Keys.PAGE_UP);
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);
+    }
+
+    @Override
+    public boolean verifyReadyToSendDevicesStatus(String param) {
+        return readyToSendDeviceStratusList.stream().allMatch((model) -> StringUtils.containsIgnoreCase(model.getText(), param));
     }
 }

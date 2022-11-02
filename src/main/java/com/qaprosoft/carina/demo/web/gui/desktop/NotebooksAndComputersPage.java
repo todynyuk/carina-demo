@@ -12,12 +12,20 @@ import com.qaprosoft.carina.demo.web.enums.ComputersCategories;
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = NotebooksAndComputersPageBase.class)
 public class NotebooksAndComputersPage extends NotebooksAndComputersPageBase {
 
+    @FindBy(xpath = "//li[contains(@class,'breadcrumbs__item')]/span")
+    private ExtendedWebElement titleCategoryText;
+
     @FindBy(xpath = "//a[contains(@class,'tile-cats__heading') and contains(.,'%s')]")
     private ExtendedWebElement universalMenuCategoriesLink;
 
     public NotebooksAndComputersPage(WebDriver driver) {
         super(driver);
         setPageURL("computers-notebooks/c80253/");
+    }
+
+    @Override
+    public String getCategoryTitleText(){
+        return titleCategoryText.getText();
     }
 
     @Override

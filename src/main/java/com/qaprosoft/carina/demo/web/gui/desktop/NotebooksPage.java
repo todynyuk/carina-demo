@@ -96,6 +96,11 @@ public class NotebooksPage extends NotebooksPageBase {
     }
 
     @Override
+    public String getChosenProductText(int index){
+        return linksListMoreAboutDevice.get(index).getText();
+    }
+
+    @Override
     public DevicePageBase clickLinkMoreAboutDevice(int index) {
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);
