@@ -12,11 +12,11 @@ public abstract class ComputersPageBase extends AbstractPage {
 
     public abstract void clickUniversalShowCheckBoxButton(String parameter);
 
-    public abstract void clickСheckBoxWithCyrillic(String parameter);
+    public abstract void clickCheckBoxWithCyrillic(String parameter);
 
     public abstract void clickUniversalCheckBox(String parameter);
 
     public abstract DevicePageBase clickLinkMoreAboutDevice(int index);
 
-    public abstract boolean verifyReadyToSendDevicesStatus(String param);
+    public abstract boolean isReadyToSendDevicesStatus(String param);
 }

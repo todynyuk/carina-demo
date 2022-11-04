@@ -19,7 +19,7 @@ public class HomePage extends HomePageBase {
     @FindBy(xpath = "//a[@class='menu-categories__link' and contains(.,'%s')]")
     private ExtendedWebElement universalMenuCategoriesLink;
 
-    @FindBy(xpath = "//a[contains(@class,'main-links__help') and contains(.,'Точки видачі Rozetka')]")
+    @FindBy(xpath = "//a[contains(@href,'retail')]")
     private ExtendedWebElement dispensationPointsLink;
 
     @FindBy(xpath = "//div[@class='header-layout']")

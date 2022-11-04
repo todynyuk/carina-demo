@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = SearchPageBase.class)
-public class SearchPage extends  SearchPageBase{
+public class SearchPage extends SearchPageBase {
 
     @FindBy(xpath = "//button[contains(@class, 'goods-tile__buy-button')]")
     private List<ExtendedWebElement> addToBagBtn;
@@ -30,7 +30,6 @@ public class SearchPage extends  SearchPageBase{
 
     @Override
     public void clickAddToBagButton(int index) {
-        //waitUntil(ExpectedConditions.titleContains("Brit"), 5);
         addToBagBtn.get(index).click();
     }
 

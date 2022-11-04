@@ -12,17 +12,17 @@ import com.qaprosoft.carina.demo.web.gui.common.DevicePageBase;
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = DevicePageBase.class)
 public class DevicePage extends DevicePageBase {
 
-    @FindBy(xpath = "//span[text()=' Купити ']")
+    @FindBy(xpath = "//li[contains(@class,'product')]/*/*/*//span[contains(@class,'buy')]")
     private ExtendedWebElement buyButton;
-
-    @FindBy(xpath = "//span[text()=' В кошику ']")
-    private ExtendedWebElement basketItemButton;
 
     @FindBy(xpath = "//div[contains(@class, 'modal__holder')]")
     private ExtendedWebElement basketPopUpWindow;
 
     @FindBy(xpath = "//div[contains(@class, 'modal__holder--large')]")
     private ShoppingBasket shoppingBasket;
+
+    @FindBy(xpath = "//button[contains(@class,'header__button--active')]")
+    private ExtendedWebElement basketButton;
 
     @FindBy(xpath = "//p[@class='product-prices__big']")
     private ExtendedWebElement chosenProductPriceText;
@@ -70,16 +70,25 @@ public class DevicePage extends DevicePageBase {
     }
 
     @Override
-    public boolean verifyIsAvailableTextPresent() {
+    public boolean isAvailableTextPresent() {
         return isAvailableText.isElementPresent();
     }
 
     @Override
-    public ShoppingBasket clickOnBuyButton() {
+    public void clickOnBuyButton() {
         buyButton.click();
-        if (!basketPopUpWindow.isElementPresent()) {
-            basketItemButton.click();
+        if (!basketPopUpWindow.isElementPresent(2)) {
+            basketButton.click();
         }
+    }
+
+    @Override
+    public boolean isPopUpWindowPresent() {
+        return basketPopUpWindow.isElementPresent();
+    }
+
+    @Override
+    public ShoppingBasket getBasketMenu() {
         return shoppingBasket;
     }
 }

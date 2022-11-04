@@ -29,7 +29,7 @@ public class ComputersPage extends ComputersPageBase {
     private List<ExtendedWebElement> linksListMoreAboutDevice;
 
     @FindBy(xpath = "//div[contains(@class,'goods-tile__availability')]")
-    private List<ExtendedWebElement> readyToSendDeviceStratusList;
+    private List<ExtendedWebElement> readyToSendDeviceStatusList;
 
     public ComputersPage(WebDriver driver) {
         super(driver);
@@ -43,7 +43,7 @@ public class ComputersPage extends ComputersPageBase {
     }
 
     @Override
-    public void clickСheckBoxWithCyrillic(String parameter) {
+    public void clickCheckBoxWithCyrillic(String parameter) {
         universalCheckBoxWithCyrillic.format(parameter).click();
     }
 
@@ -60,7 +60,7 @@ public class ComputersPage extends ComputersPageBase {
     }
 
     @Override
-    public boolean verifyReadyToSendDevicesStatus(String param) {
-        return readyToSendDeviceStratusList.stream().allMatch((model) -> StringUtils.containsIgnoreCase(model.getText(), param));
+    public boolean isReadyToSendDevicesStatus(String param) {
+        return readyToSendDeviceStatusList.stream().allMatch((model) -> StringUtils.containsIgnoreCase(model.getText(), param));
     }
 }

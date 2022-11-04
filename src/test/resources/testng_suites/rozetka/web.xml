@@ -88,7 +88,7 @@
         <classes>
             <class name="com.qaprosoft.carina.demo.RozetkaTests">
                 <methods>
-                    <include name="testVerifyAddingAnItemToTheBasket"/>
+                    <include name="testAddItemToBasket"/>
                 </methods>
             </class>
         </classes>

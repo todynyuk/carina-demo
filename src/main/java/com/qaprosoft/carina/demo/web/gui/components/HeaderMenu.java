@@ -28,16 +28,16 @@ public class HeaderMenu extends AbstractUIObject implements ICustomTypePageFacto
         super(driver, searchContext);
     }
 
-    public boolean isCatalogButtonClickable(){
-       return  catalogButton.isClickable();
+    public boolean isCatalogButtonClickable() {
+        return catalogButton.isClickable();
     }
 
-    public void clickCatalogButton(){
+    public void clickCatalogButton() {
         catalogButton.click();
     }
 
-    public  boolean isSelectedSectionVisible(MenuCategory menuCategory){
-       return universalCategoryMenu.format(menuCategory.getNamePage()).isVisible();
+    public boolean isSelectedSectionVisible(MenuCategory menuCategory) {
+        return universalCategoryMenu.format(menuCategory.getNamePage()).isVisible();
     }
 
     public AbstractPage clickOnCategoryMenu(MenuCategory menuCategory) {

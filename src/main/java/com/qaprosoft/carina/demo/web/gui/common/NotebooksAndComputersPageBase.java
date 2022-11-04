@@ -13,5 +13,9 @@ public abstract class NotebooksAndComputersPageBase extends AbstractPage {
 
     public abstract String getCategoryTitleText();
 
+    public abstract String getPageTitleText();
+
     public abstract AbstractPage clickOnDeviceCategoryLink(ComputersCategories linkName);
+
+    public abstract PcAndLaptopsChosenBrandPageBase clickOnSliderBrandLink(String param);
 }

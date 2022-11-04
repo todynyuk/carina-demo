@@ -1,11 +1,9 @@
 package com.qaprosoft.carina.demo;
 
-import com.qaprosoft.carina.core.foundation.dataprovider.annotations.XlsDataSourceParameters;
 import com.qaprosoft.carina.core.foundation.utils.ownership.MethodOwner;
 import com.qaprosoft.carina.demo.web.gui.components.HeaderMenu;
 import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,8 +12,6 @@ import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.demo.web.gui.common.*;
 import com.qaprosoft.carina.demo.web.gui.desktop.HomePage;
 import com.qaprosoft.carina.core.foundation.utils.R;
-
-import java.util.HashMap;
 
 public class RozetkaTests implements IAbstractTest {
 
@@ -70,13 +66,13 @@ public class RozetkaTests implements IAbstractTest {
         ComputersPageBase computersPageBase = (ComputersPageBase) notebooksAndComputersPageBase.clickOnDeviceCategoryLink(ComputersCategories.COMPUTERS);
         computersPageBase.clickUniversalCheckBox(R.TESTDATA.get("computerBrandName"));
         computersPageBase.clickUniversalCheckBox(R.TESTDATA.get("processorName"));
-        computersPageBase.clickСheckBoxWithCyrillic("8 ГБ");
-        computersPageBase.clickСheckBoxWithCyrillic("Моноблоки");
+        computersPageBase.clickCheckBoxWithCyrillic("8 ГБ");
+        computersPageBase.clickCheckBoxWithCyrillic("Моноблоки");
         computersPageBase.clickUniversalShowCheckBoxButton("Тип матриці");
         computersPageBase.clickUniversalCheckBox(R.TESTDATA.get("matrixType"));
         computersPageBase.clickUniversalCheckBox(ItemState.AVAILABLE.getDeviceUseState());
         DevicePageBase devicePageBase = computersPageBase.clickLinkMoreAboutDevice(1);
-        Assert.assertTrue(devicePageBase.verifyIsAvailableTextPresent(), "Available text not presented");
+        Assert.assertTrue(devicePageBase.isAvailableTextPresent(), "Available text not presented");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("processorName")), "Processor name text not contains in about device text");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics("8 ГБ"), "Ram text not contains in about device text");
         Assert.assertTrue(devicePageBase.verifyChosenParameterInShortCharacteristics(R.TESTDATA.get("matrixType")), "Matrix type text not contains in about device text");
@@ -173,7 +169,7 @@ public class RozetkaTests implements IAbstractTest {
     @Test()
     @MethodOwner(owner = "todynyuk")
     @TestLabel(name = "feature", value = {"web"})
-    public void testVerifyAddingAnItemToTheBasket() {
+    public void testAddItemToBasket() {
         HomePage homePage = new HomePage(getDriver());
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page isn't opened");
@@ -184,14 +180,20 @@ public class RozetkaTests implements IAbstractTest {
                 "Selected category not visible");
         NotebooksAndComputersPageBase notebooksAndComputers = (NotebooksAndComputersPageBase)
                 headerMenu.clickOnCategoryMenu(MenuCategory.LAPTOPS_COMPUTERS);
+        String pageTitleText = notebooksAndComputers.getPageTitleText();
         Assert.assertTrue(notebooksAndComputers.isPageOpened(), "Chosen page not opened");
-        NotebooksPageBase notebooks = (NotebooksPageBase)
-                notebooksAndComputers.clickOnDeviceCategoryLink(ComputersCategories.LAPTOPS);
-        notebooks.clickBrandOrSsdStorageCapacityCheckbox(R.TESTDATA.get("computerBrandName"));
-        String mainSelectedProductText = notebooks.getChosenProductText(1);
-        DevicePageBase devicePageBase = notebooks.clickLinkMoreAboutDevice(1);
-        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(mainSelectedProductText), "Product page isn't opened");
-        ShoppingBasket shoppingBasket = devicePageBase.clickOnBuyButton();
+        PcAndLaptopsChosenBrandPageBase pcAndLaptopsChosenBrand = notebooksAndComputers.clickOnSliderBrandLink(R.TESTDATA.get("sliderBrandName"));
+        Assert.assertTrue(pcAndLaptopsChosenBrand.isPageTitleContainsChosenParameters(pageTitleText),
+                "Page title not contains chosen category");
+        Assert.assertTrue(pcAndLaptopsChosenBrand.isPageTitleContainsChosenParameters(R.TESTDATA.get("computerBrandName")),
+                "Page title not contains chosen brand");
+        String mainSelectedProductText = pcAndLaptopsChosenBrand.getProductText(1);
+        DevicePageBase devicePageBase = pcAndLaptopsChosenBrand.clickLinkMoreAboutDevice(1);
+        Assert.assertTrue(devicePageBase.verifyChosenParamInAllCharacteristics(mainSelectedProductText),
+                "Product page isn't opened");
+        devicePageBase.clickOnBuyButton();
+        Assert.assertTrue(devicePageBase.isPopUpWindowPresent(), "Pop up window not opened");
+        ShoppingBasket shoppingBasket = devicePageBase.getBasketMenu();
         String selectedProductInBasketText = shoppingBasket.getGoodsDescriptionText(0);
         Assert.assertEquals(selectedProductInBasketText, mainSelectedProductText,
                 "Pop up window not contains selected product");

@@ -11,7 +11,7 @@ public abstract class DispensationPointsPageBase extends AbstractPage {
 
     public abstract boolean isDispensationPointsTitleTextPresent();
 
-    public abstract void clickChooseCityButton(String cityName,String param);
+    public abstract void clickChooseCityButton(String cityName, String param);
 
     public abstract boolean isDispensationPointsTitleTextContainsChosenCity(String cityName);
 

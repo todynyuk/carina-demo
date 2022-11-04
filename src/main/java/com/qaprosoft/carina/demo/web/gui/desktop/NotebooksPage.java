@@ -30,8 +30,8 @@ public class NotebooksPage extends NotebooksPageBase {
     @FindBy(xpath = "//a[@class='goods-tile__heading ng-star-inserted']")
     private List<ExtendedWebElement> searchBrandList;
 
-    @FindBy(xpath = "//div[contains(@class, 'goods-tile__availability') and contains(.,' Немає в наявності ')]")
-    private List<ExtendedWebElement> notAvailableText;
+    @FindBy(xpath = "//div[contains(@class, 'goods-tile__availability--unavailable')]")
+    private List<ExtendedWebElement> notAvailableProductsStatusText;
 
     @FindBy(xpath = "//span[@class='goods-tile__price-value']")
     private List<ExtendedWebElement> priceLaptopText;
@@ -86,7 +86,7 @@ public class NotebooksPage extends NotebooksPageBase {
     @Override
     public boolean verifySearchByIsNotAvailableLaptops(int index) {
         linksListMoreAboutDevice.get(index).sendKeys(Keys.PAGE_UP);
-        return notAvailableText.size() == 0;
+        return notAvailableProductsStatusText.size() == 0;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class NotebooksPage extends NotebooksPageBase {
     }
 
     @Override
-    public String getChosenProductText(int index){
+    public String getProductText(int index) {
         return linksListMoreAboutDevice.get(index).getText();
     }
 

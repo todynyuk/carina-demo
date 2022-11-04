@@ -31,7 +31,7 @@ public abstract class NotebooksPageBase extends AbstractPage {
 
     public abstract boolean verifySortByCustomMaximumPrice(String maxPriceValue);
 
-    public abstract String getChosenProductText(int index);
+    public abstract String getProductText(int index);
 
     public abstract DevicePageBase clickLinkMoreAboutDevice(int index);
 }
