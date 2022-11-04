@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.web.gui.desktop;
 
+import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,18 @@ import com.qaprosoft.carina.demo.web.gui.common.DevicePageBase;
 
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = DevicePageBase.class)
 public class DevicePage extends DevicePageBase {
+
+    @FindBy(xpath = "//li[contains(@class,'product')]/*/*/*//span[contains(@class,'buy')]")
+    private ExtendedWebElement buyButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'modal__holder')]")
+    private ExtendedWebElement basketPopUpWindow;
+
+    @FindBy(xpath = "//div[contains(@class, 'modal__holder--large')]")
+    private ShoppingBasket shoppingBasket;
+
+    @FindBy(xpath = "//button[contains(@class,'header__button--active')]")
+    private ExtendedWebElement basketButton;
 
     @FindBy(xpath = "//p[@class='product-prices__big']")
     private ExtendedWebElement chosenProductPriceText;
@@ -37,7 +50,8 @@ public class DevicePage extends DevicePageBase {
 
     @Override
     public Integer getSmartphonePriceText() {
-        return Integer.valueOf(chosenProductPriceText.getText().replace(" ", "").replaceAll("[^0-9?!\\\\.]", ""));
+        return Integer.valueOf(chosenProductPriceText.getText().replace(" ", "")
+                .replaceAll("[^0-9?!\\\\.]", ""));
     }
 
     @Override
@@ -56,7 +70,25 @@ public class DevicePage extends DevicePageBase {
     }
 
     @Override
-    public boolean verifyIsAvailableTextPresent() {
+    public boolean isAvailableTextPresent() {
         return isAvailableText.isElementPresent();
+    }
+
+    @Override
+    public void clickOnBuyButton() {
+        buyButton.click();
+        if (!basketPopUpWindow.isElementPresent(2)) {
+            basketButton.click();
+        }
+    }
+
+    @Override
+    public boolean isPopUpWindowPresent() {
+        return basketPopUpWindow.isElementPresent();
+    }
+
+    @Override
+    public ShoppingBasket getBasketMenu() {
+        return shoppingBasket;
     }
 }

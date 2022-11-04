@@ -1,5 +1,6 @@
 package com.qaprosoft.carina.demo.web.gui.common;
 
+import com.qaprosoft.carina.demo.web.gui.components.ShoppingBasket;
 import org.openqa.selenium.WebDriver;
 
 import com.qaprosoft.carina.core.gui.AbstractPage;
@@ -20,5 +21,11 @@ public abstract class DevicePageBase extends AbstractPage {
 
     public abstract boolean verifyChosenParamInAllCharacteristics(String ram);
 
-    public abstract boolean verifyIsAvailableTextPresent();
+    public abstract boolean isAvailableTextPresent();
+
+    public abstract void clickOnBuyButton();
+
+    public abstract boolean isPopUpWindowPresent();
+
+    public abstract ShoppingBasket getBasketMenu();
 }

@@ -31,7 +31,7 @@ public class DispensationPointsPage extends DispensationPointsPageBase {
     }
 
     @Override
-    public void clickChooseCityButton(String cityName,String param) {
+    public void clickChooseCityButton(String cityName, String param) {
         showMoreButton.format(param).click();
         chooseCityButton.format(cityName).click();
     }

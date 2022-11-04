@@ -14,6 +14,15 @@ public class ShoppingBasket extends AbstractUIObject implements ICustomTypePageF
     @FindBy(xpath = "//a[@class='cart-product__title']")
     private List<ExtendedWebElement> goodsInCartTitleText;
 
+    @FindBy(xpath = "//a[@data-testid='title']")
+    private List<ExtendedWebElement> itemsInCartTitleText;
+
+    @FindBy(xpath = "//p[@class='cart-product__price']")
+    private List<ExtendedWebElement> goodsInCartTitlePrice;
+
+    @FindBy(xpath = "//button[contains(@class,'popup-menu__toggle--context')]")
+    private List<ExtendedWebElement> itemsOptionBtn;
+
     @FindBy(xpath = "//div[@class='cart-receipt__sum-price']//span[1]")
     private ExtendedWebElement sumPrice;
 
@@ -32,7 +41,7 @@ public class ShoppingBasket extends AbstractUIObject implements ICustomTypePageF
     }
 
     public Integer getGoodsInCartListSize() {
-        return goodsInCartTitleText.size();
+        return goodsInCartTitlePrice.size();
     }
 
     public Integer getSumPriceText() {
@@ -40,7 +49,7 @@ public class ShoppingBasket extends AbstractUIObject implements ICustomTypePageF
     }
 
     public String getGoodsDescriptionText(int index) {
-        return goodsInCartTitleText.get(index).getText();
+        return itemsInCartTitleText.get(index).getText();
     }
 
     public void setInputFieldValue(int count) {

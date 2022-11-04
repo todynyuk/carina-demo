@@ -2,6 +2,7 @@ package com.qaprosoft.carina.demo.web.gui.desktop;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -27,6 +28,9 @@ public class ComputersPage extends ComputersPageBase {
     @FindBy(xpath = "//a[@class='goods-tile__heading ng-star-inserted']")
     private List<ExtendedWebElement> linksListMoreAboutDevice;
 
+    @FindBy(xpath = "//div[contains(@class,'goods-tile__availability')]")
+    private List<ExtendedWebElement> readyToSendDeviceStatusList;
+
     public ComputersPage(WebDriver driver) {
         super(driver);
         setPageURL("computers/c80095/");
@@ -39,7 +43,7 @@ public class ComputersPage extends ComputersPageBase {
     }
 
     @Override
-    public void clickСheckBoxWithCyrillic(String parameter) {
+    public void clickCheckBoxWithCyrillic(String parameter) {
         universalCheckBoxWithCyrillic.format(parameter).click();
     }
 
@@ -53,5 +57,10 @@ public class ComputersPage extends ComputersPageBase {
         linksListMoreAboutDevice.get(index).sendKeys(Keys.PAGE_UP);
         linksListMoreAboutDevice.get(index).click();
         return initPage(getDriver(), DevicePageBase.class);
+    }
+
+    @Override
+    public boolean isReadyToSendDevicesStatus(String param) {
+        return readyToSendDeviceStatusList.stream().allMatch((model) -> StringUtils.containsIgnoreCase(model.getText(), param));
     }
 }
